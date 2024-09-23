@@ -537,6 +537,39 @@ $resume_data = [
 $index=$_GET['index'];
 $resume_intro = $resume_data[$index];
 $resume_contacts = $resume_intro['contacts'];
+function display_experience($experiences){
+	foreach($experiences as $experience){ //loops through each experience found in the members experience array
+		echo '
+				<div class="resume-timeline-item-header mb-2">
+					<div class="d-flex flex-column flex-md-row">
+						<h3 class="resume-position-title font-weight-bold mb-1">' . $experience['job-title'] . '</h3>
+						<div class="resume-company-name ms-auto">' . $experience['company'] . '</div>
+					</div><!--//row-->
+					<div class="resume-position-time">' . $experience['date'] . '</div>
+				</div><!--//resume-timeline-item-header-->
+				<div class="resume-timeline-item-desc">
+					<p>' . $experience['description'] . '</p>
+					<h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
+					<p>' . $experience['achievements_summary'] . '</p>
+					<ul>';
+					foreach ($experience['accomplishments'] as $accomplishments){
+						echo'
+						<li>' . $accomplishments . '</li>
+						';
+					}
+				echo '</ul>
+					<h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
+					<ul class="list-inline">';
+					foreach ($experience['technologies'] as $technologies){
+						echo'
+						<li class="list-inline-item"><span class="badge bg-secondary badge-pill">' . $technologies . '</span></li>
+					';
+					}
+				echo'
+					</ul>
+				</div><!--//resume-timeline-item-desc-->';
+	};
+};
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
@@ -612,38 +645,7 @@ $resume_contacts = $resume_intro['contacts'];
 									    <?php
 										$member = $resume_data[$index];
 										$member_jobs = $member['experience'];
-										for ($i = 0; $i < count($member['experience']); $i++){
-											$member_jobs = $member['experience'][$i];
-											echo '
-											<div class="resume-timeline-item-header mb-2">
-												<div class="d-flex flex-column flex-md-row">
-													<h3 class="resume-position-title font-weight-bold mb-1">' . $member_jobs['job-title'] . '</h3>
-													<div class="resume-company-name ms-auto">' . $member_jobs['company'] . '</div>
-												</div><!--//row-->
-												<div class="resume-position-time">' . $member_jobs['date'] . '</div>
-											</div><!--//resume-timeline-item-header-->
-											<div class="resume-timeline-item-desc">
-												<p>' . $member_jobs['description'] . '</p>
-												<h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
-												<p>' . $member_jobs['achievements_summary'] . '</p>
-												<ul>';
-												foreach ($member_jobs['accomplishments'] as $accomplishments){
-													echo'
-													<li>' . $accomplishments . '</li>
-													';
-												}
-											echo '</ul>
-												<h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
-												<ul class="list-inline">';
-												foreach ($member_jobs['technologies'] as $technologies){
-													echo'
-													<li class="list-inline-item"><span class="badge bg-secondary badge-pill">' . $technologies . '</span></li>
-												';
-												}
-											echo'
-												</ul>
-											</div><!--//resume-timeline-item-desc-->';
-										}
+										display_experience($member_jobs);
 										?>
 								    </article><!--//resume-timeline-item-->
 									
