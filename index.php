@@ -15,7 +15,8 @@ $member_data = [
 		"title" => "Software Engineer"
 	],
 ];
-
+function calculate_age($dob) {
+	$birthdate = new Date_time($dob)
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
