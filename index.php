@@ -16,7 +16,10 @@ $member_data = [
 	],
 ];
 function calculate_age($dob) {
-	$birthdate = new Date_time($dob)
+	$birthdate = new Date_time($dob);
+	$currentDate = new Date_time();
+	$age = $currentDate->diff($birthDate);
+	return $age->y;
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
