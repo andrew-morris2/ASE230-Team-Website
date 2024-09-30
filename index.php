@@ -15,32 +15,12 @@ $member_data = [
 		"title" => "Software Engineer"
 	],
 ];
+$member = $member_data[];
 function calculate_age($dob) {
     $dob = new DateTime($dob);  
     $now = new DateTime();      
     $age = $now->diff($dob);    
     return $age->y; 
-}
-for ($i = 0; $i < count($member_data); $i++){
-    $member = $member_data[$i];
-    $age = calculate_age($member['dob']);  
-    echo '<header class="resume-header pt-4 pt-md-0">
-        <div class="row">
-            <div class="col-block col-md-auto resume-picture-holder text-center text-md-start">
-                <img class="picture" src="assets/images/' . $member['member'] . '.jpg" style="height: 200px;" alt="">
-            </div><!--//col-->
-            <div class="col">
-                <div class="row p-4 justify-content-center justify-content-md-between">
-                    <div class="primary-info col-auto">
-                        <h1 class="name mt-0 mb-1 text-white text-uppercase">' . $member['member'] . '</h1>
-                        <div class="title mb-3">' . $member['title'] . '</div>
-                        <div class="age mb-3">Age: ' . $age . '</div>  <!-- Display age here -->
-                        <a href="detail.php?index=' . $i . '" class="btn btn-secondary">See full profile</a>
-                    </div><!--//primary-info-->
-                </div><!--//row-->
-            </div><!--//col-->
-        </div><!--//row-->
-    </header>';
 }
 function display_member_card($member, $index) {
     $age = calculate_age($member['dob']);
@@ -94,26 +74,7 @@ function display_member_card($member, $index) {
 			<h1 class="py-4 text-center">OUR AMAZING TEAM</h1>
 			<?php
 				for ($i = 0; $i < count($member_data); $i++){
-					$member = $member_data[$i];
-					echo '<header class="resume-header pt-4 pt-md-0">
-			    		<div class="row">
-				    		<div class="col-block col-md-auto resume-picture-holder text-center text-md-start">
-				        		<img class="picture" src="assets/images/' . $member['member'] . '.jpg" style="height: 200px; alt="">
-				    	</div><!--//col-->
-				    	<div class="col">
-					    	<div class="row p-4 justify-content-center justify-content-md-between">
-						    	<div class="primary-info col-auto">
-							    	<h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">' . $member['member'] . '</h1>
-							    	<div class="title mb-3">' . $member['title'] . '</div>
-									<a href="detail.php?index=' . $i . '" class="btn btn-secondary">See full profile</a>
-						    	</div><!--//primary-info-->
-						    	<div class="secondary-info col-auto mt-2">
-						    	</div><!--//secondary-info-->
-					   		</div><!--//row-->
-					    
-				    	</div><!--//col-->
-			    	</div><!--//row-->
-		    	</header>';
+					display_member_card($member[$i]);
 				}
 			?>
 		    
