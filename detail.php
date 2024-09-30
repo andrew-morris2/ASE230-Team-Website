@@ -5,14 +5,15 @@ $resume_data = [
 		"member" => "Andrew Morris",
 		"title" => "Network Engineer",
 		"summary" => "I am a current senior at Northern Kentucky University majoring in Cybersecurity. Throughout my time in university, I have acquired specific skills seen in cyber defense operations including utilization of various SIEM systems, implementation of diverse security controls, and proficiency in security best practices to enhance security. As a student, I have current professional experience in the IT industry as a help desk technician and system administrator for System Support Associates. I have put my knowledge acquired from various classes and projects into succesfully passing several certifications, including the CompTIA Security+ and seeking to apply acquired skills to enhance the overall security posture with a team of like-minded individuals.",
-		"picture_height" => "150px",
+		"picture_height" => "150px",		
 		"contacts" => [
 			"phone" => "8593079074",
 			"email" => "andrew.morris0202@gmail.com",
 			"linkedin" => "https://www.linkedin.com/in/andrew-morris", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/andrew-morris-b7856726a/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/andrew-morris02",
-			"social" => "https://x.com/andrew_morris02"
+			"social" => "https://x.com/andrew_morris02",
+			'dob' => '2002-07-28'
 		],
 
 		"experience" => [
@@ -198,7 +199,8 @@ $resume_data = [
 			"linkedin" => "https://www.linkedin.com/in/ericbennetturner/", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/ericbennetturner/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/e-turner1",
-			"social" => "https://x.com/e_turner_10"
+			"social" => "https://x.com/e_turner_10",
+			"dob" => "2003-08-16"
 		],
 
 		"experience" => [
@@ -365,7 +367,8 @@ $resume_data = [
 			"linkedin" => "https://www.linkedin.com/in/", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/armani",
-			"social" => "https://x.com/therealarmanicleo"
+			"social" => "https://x.com/therealarmanicleo",
+			"dob" => "1973-09-25"
 		],
 
 		"experience" => [
@@ -534,9 +537,17 @@ $resume_data = [
 		], 
 	],
 ];
+function calculate_age($dob) {
+    $dob = new DateTime($dob);  
+    $now = new DateTime();      
+    $age = $now->diff($dob);    
+    return $age->y; 
+};
 $index=$_GET['index'];
 $resume_intro = $resume_data[$index];
 $resume_contacts = $resume_intro['contacts'];
+$age_of_member = $resume_contacts['dob'];
+$age = calculate_age($age_of_member);
 function display_experience($experiences){
 	foreach($experiences as $experience){ //loops through each experience found in the members experience array
 		echo '
@@ -614,6 +625,7 @@ function display_experience($experiences){
 							    <ul class="list-unstyled">
 								    <li class="mb-2"><a class="text-link" href="#"><i class="far fa-envelope fa-fw me-2" data-fa-transform="grow-3"></i><?=$resume_contacts['email']?></a></li>
 								    <li><a class="text-link" href="#"><i class="fas fa-mobile-alt fa-fw me-2" data-fa-transform="grow-6"></i><?=$resume_contacts['phone']?></a></li>
+									<li><a class="text-link" href="#"><i class="fa-fw me-2" data-fa-transform="grow-6"></i>Age: <?=$age?></a></li>
 							    </ul>
 						    </div><!--//primary-info-->
 						    <div class="secondary-info col-auto mt-2">
@@ -792,4 +804,3 @@ function display_experience($experiences){
 
 </body>
 </html> 
-
