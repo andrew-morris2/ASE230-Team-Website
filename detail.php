@@ -5,14 +5,15 @@ $resume_data = [
 		"member" => "Andrew Morris",
 		"title" => "Network Engineer",
 		"summary" => "I am a current senior at Northern Kentucky University majoring in Cybersecurity. Throughout my time in university, I have acquired specific skills seen in cyber defense operations including utilization of various SIEM systems, implementation of diverse security controls, and proficiency in security best practices to enhance security. As a student, I have current professional experience in the IT industry as a help desk technician and system administrator for System Support Associates. I have put my knowledge acquired from various classes and projects into succesfully passing several certifications, including the CompTIA Security+ and seeking to apply acquired skills to enhance the overall security posture with a team of like-minded individuals.",
-		"picture_height" => "150px",
+		"picture_height" => "150px",		
 		"contacts" => [
 			"phone" => "8593079074",
 			"email" => "andrew.morris0202@gmail.com",
 			"linkedin" => "https://www.linkedin.com/in/andrew-morris", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/andrew-morris-b7856726a/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/andrew-morris02",
-			"social" => "https://x.com/andrew_morris02"
+			"social" => "https://x.com/andrew_morris02",
+			'dob' => '2002-07-28'
 		],
 
 		"experience" => [
@@ -198,7 +199,8 @@ $resume_data = [
 			"linkedin" => "https://www.linkedin.com/in/ericbennetturner/", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/ericbennetturner/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/e-turner1",
-			"social" => "https://x.com/e_turner_10"
+			"social" => "https://x.com/e_turner_10",
+			"dob" => "2003-08-16"
 		],
 
 		"experience" => [
@@ -365,7 +367,8 @@ $resume_data = [
 			"linkedin" => "https://www.linkedin.com/in/", //placeholder link, this is what is shown on the resume page, yours will likely be too large as well
 			"linkedin_link" => "https://www.linkedin.com/in/", //this is the actual link to my linkedin since the original causes issues with formatting
 			"github" => "https://github.com/armani",
-			"social" => "https://x.com/therealarmanicleo"
+			"social" => "https://x.com/therealarmanicleo",
+			"dob" => "1973-09-25"
 		],
 
 		"experience" => [
@@ -539,30 +542,45 @@ function calculate_age($dob) {
     $now = new DateTime();      
     $age = $now->diff($dob);    
     return $age->y; 
-}
-for ($i = 0; $i < count($member_data); $i++){
-    $member = $member_data[$i];
-    $age = calculate_age($member['dob']);  
-    echo '<header class="resume-header pt-4 pt-md-0">
-        <div class="row">
-            <div class="col-block col-md-auto resume-picture-holder text-center text-md-start">
-                <img class="picture" src="assets/images/' . $member['member'] . '.jpg" style="height: 200px;" alt="">
-            </div><!--//col-->
-            <div class="col">
-                <div class="row p-4 justify-content-center justify-content-md-between">
-                    <div class="primary-info col-auto">
-                        <h1 class="name mt-0 mb-1 text-white text-uppercase">' . $member['member'] . '</h1>
-                        <div class="title mb-3">' . $member['title'] . '</div>
-                        <div class="age mb-3">Age: ' . $age . '</div>  <!-- Display age here -->
-                        <a href="detail.php?index=' . $i . '" class="btn btn-secondary">See full profile</a>
-                    </div><!--//primary-info-->
-                </div><!--//row-->
-            </div><!--//col-->
-        </div><!--//row-->
-    </header>';
+};
 $index=$_GET['index'];
 $resume_intro = $resume_data[$index];
 $resume_contacts = $resume_intro['contacts'];
+$age_of_member = $resume_contacts['dob'];
+$age = calculate_age($age_of_member);
+function display_experience($experiences){
+	foreach($experiences as $experience){ //loops through each experience found in the members experience array
+		echo '
+				<div class="resume-timeline-item-header mb-2">
+					<div class="d-flex flex-column flex-md-row">
+						<h3 class="resume-position-title font-weight-bold mb-1">' . $experience['job-title'] . '</h3>
+						<div class="resume-company-name ms-auto">' . $experience['company'] . '</div>
+					</div><!--//row-->
+					<div class="resume-position-time">' . $experience['date'] . '</div>
+				</div><!--//resume-timeline-item-header-->
+				<div class="resume-timeline-item-desc">
+					<p>' . $experience['description'] . '</p>
+					<h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
+					<p>' . $experience['achievements_summary'] . '</p>
+					<ul>';
+					foreach ($experience['accomplishments'] as $accomplishments){
+						echo'
+						<li>' . $accomplishments . '</li>
+						';
+					}
+				echo '</ul>
+					<h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
+					<ul class="list-inline">';
+					foreach ($experience['technologies'] as $technologies){
+						echo'
+						<li class="list-inline-item"><span class="badge bg-secondary badge-pill">' . $technologies . '</span></li>
+					';
+					}
+				echo'
+					</ul>
+				</div><!--//resume-timeline-item-desc-->';
+	};
+};
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
@@ -607,6 +625,7 @@ $resume_contacts = $resume_intro['contacts'];
 							    <ul class="list-unstyled">
 								    <li class="mb-2"><a class="text-link" href="#"><i class="far fa-envelope fa-fw me-2" data-fa-transform="grow-3"></i><?=$resume_contacts['email']?></a></li>
 								    <li><a class="text-link" href="#"><i class="fas fa-mobile-alt fa-fw me-2" data-fa-transform="grow-6"></i><?=$resume_contacts['phone']?></a></li>
+									<li><a class="text-link" href="#"><i class="fa-fw me-2" data-fa-transform="grow-6"></i>Age: <?=$age?></a></li>
 							    </ul>
 						    </div><!--//primary-info-->
 						    <div class="secondary-info col-auto mt-2">
@@ -638,38 +657,7 @@ $resume_contacts = $resume_intro['contacts'];
 									    <?php
 										$member = $resume_data[$index];
 										$member_jobs = $member['experience'];
-										for ($i = 0; $i < count($member['experience']); $i++){
-											$member_jobs = $member['experience'][$i];
-											echo '
-											<div class="resume-timeline-item-header mb-2">
-												<div class="d-flex flex-column flex-md-row">
-													<h3 class="resume-position-title font-weight-bold mb-1">' . $member_jobs['job-title'] . '</h3>
-													<div class="resume-company-name ms-auto">' . $member_jobs['company'] . '</div>
-												</div><!--//row-->
-												<div class="resume-position-time">' . $member_jobs['date'] . '</div>
-											</div><!--//resume-timeline-item-header-->
-											<div class="resume-timeline-item-desc">
-												<p>' . $member_jobs['description'] . '</p>
-												<h4 class="resume-timeline-item-desc-heading font-weight-bold">Achievements:</h4>
-												<p>' . $member_jobs['achievements_summary'] . '</p>
-												<ul>';
-												foreach ($member_jobs['accomplishments'] as $accomplishments){
-													echo'
-													<li>' . $accomplishments . '</li>
-													';
-												}
-											echo '</ul>
-												<h4 class="resume-timeline-item-desc-heading font-weight-bold">Technologies used:</h4>
-												<ul class="list-inline">';
-												foreach ($member_jobs['technologies'] as $technologies){
-													echo'
-													<li class="list-inline-item"><span class="badge bg-secondary badge-pill">' . $technologies . '</span></li>
-												';
-												}
-											echo'
-												</ul>
-											</div><!--//resume-timeline-item-desc-->';
-										}
+										display_experience($member_jobs);
 										?>
 								    </article><!--//resume-timeline-item-->
 									
@@ -816,4 +804,3 @@ $resume_contacts = $resume_intro['contacts'];
 
 </body>
 </html> 
-
